@@ -16,6 +16,19 @@ See "Tool compatibility" under Design Principles for adapting to a tool that
 does not.
 
 
+## Contents
+
+* [The Problem This Solves](#the-problem-this-solves)
+* [Core Concepts](#core-concepts)
+* [Setting Up a New Workspace](#setting-up-a-new-workspace)
+* [Day-to-Day Workflow](#day-to-day-workflow)
+* [Beyond STATE.md: Identity and Vision](#beyond-statemd-identity-and-vision)
+* [What Goes Where](#what-goes-where)
+* [Relationship to Karpathy's "LLM Wiki" Pattern](#relationship-to-karpathys-llm-wiki-pattern)
+* [Design Principles](#design-principles)
+* [Tips](#tips)
+
+
 ## The Problem This Solves
 
 When working with AI on longer efforts -- code analysis, debugging, design
@@ -26,6 +39,13 @@ start from scratch, but are afraid of losing buried insights.
 
 This template provides a structure that separates raw exploration from curated
 understanding, so you can work messily without losing clarity.
+
+TL;DR: copy this folder, open an AI chat, and tell the agent what you want
+to work on. That's it. The first agent will likely offer to bootstrap `STATE.md`
+and ask what it needs to know; the structure described below grows from
+there. You can stop reading at this point and still use the template
+competently -- the rest of this README is for when you want to understand
+the design.
 
 
 ## Core Concepts
