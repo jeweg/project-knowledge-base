@@ -346,12 +346,9 @@ introduction is conversational instead, with the rule documented in AGENTS.md.
 
 ## Tips
 
-* Back up your workspace folder periodically. Cursor stores chat transcripts in
-  your home directory (`%USERPROFILE%\.cursor\projects\`), not in the workspace.
-  If you want to preserve chat history too, back up that location as well.
-* The `_archive/` folder is optional. If you are comfortable deleting consumed
-  working files, skip it. It exists for people who are not ready to let go yet.
-* For meetings and interviews, keep the full transcript in `_archive/` and a
-  shorter summary in `_working/`. The summary is what agents will find via the
+* The `_archive/` and `_attic/`folders are optional. If you are comfortable deleting 
+  consumed working files, skip it. It exists for people who are not ready to let go yet.
+* For meetings and interviews, consider keeping the full transcript in `_archive/` 
+  and a shorter summary in `_working/`. The summary is what agents will find via the
   index and use day-to-day. The full transcript stays available in case you need
   to look up a specific quote, exact wording, or a detail the summary missed.
