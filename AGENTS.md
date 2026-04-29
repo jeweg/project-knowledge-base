@@ -176,6 +176,14 @@ When writing Markdown files, default to these rules:
 * If both list (bullet points) and tables are equally suitable,
   prefer a list.
 
+### Reporting test status
+
+Report green/red, not counts. "532 tests passed" goes stale and is
+ambiguous (full suite or subset?); "full suite green".
+When a count IS informative, name what it counts
+("12 new idempotency tests added; suite green"). Applies to commits,
+knowledge layer files, and handoff working files.
+
 ### When producing findings or insights
 
 * When a finding is clean and operational, update `STATE.md`
