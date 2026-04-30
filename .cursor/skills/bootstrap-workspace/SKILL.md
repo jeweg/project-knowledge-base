@@ -52,3 +52,8 @@ This skill runs once when a new workspace is created from the template.
    Concepts", "Setting Up a New Workspace"), suggest to the user that it
    can be deleted now that the workspace is set up. Do not delete a
    `README.md` whose content is project documentation.
+6. If the user wants an LF-only repository, point them at
+   `_template/line-endings.md` and offer to run
+   `python _template/apply-lf-policy.py`.
+   Do not apply the policy silently; `.gitattributes` and `.editorconfig`
+   are project policy files, not public-template defaults.

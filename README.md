@@ -21,6 +21,7 @@ the workspace root (most modern ones do).
 * [The Problem This Solves](#the-problem-this-solves)
 * [Core Concepts](#core-concepts)
 * [Setting Up a New Workspace](#setting-up-a-new-workspace)
+* [Optional: LF-only Line Endings](#optional-lf-only-line-endings)
 * [Day-to-Day Workflow](#day-to-day-workflow)
 * [Beyond STATE.md: Identity and Vision](#beyond-statemd-identity-and-vision)
 * [What Goes Where](#what-goes-where)
@@ -87,6 +88,22 @@ default. See "Beyond STATE.md" below.
    conventions made `README.md` the right name for the template repo's
    landing page; once you have copied the template into a project, the
    file's job is done.)
+
+
+## Optional: LF-only Line Endings
+
+The template is neutral by default and does not force a line-ending
+policy. If you want a derived repository to be LF-only, run:
+
+```bash
+python _template/apply-lf-policy.py
+```
+
+The script adds `.gitattributes` and `.editorconfig`, warns about Git
+line-ending config such as `core.autocrlf=true`, normalizes tracked text
+files when the workspace is already a Git repo, and leaves the result
+uncommitted for review. See `_template/line-endings.md` for the full
+procedure and caveats.
 
 
 ## Day-to-Day Workflow

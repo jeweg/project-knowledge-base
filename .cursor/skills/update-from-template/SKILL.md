@@ -78,6 +78,8 @@ Owned by the template:
 * All files under `.cursor/rules/`
 * All files under `.cursor/skills/bootstrap-workspace/`
 * All files under `.cursor/skills/update-from-template/` (this skill)
+* `_template/line-endings.md`
+* `_template/apply-lf-policy.py`
 
 NOT touched (project-owned content):
 
@@ -90,6 +92,8 @@ NOT touched (project-owned content):
 * `_working/.gitkeep`, `_archive/.gitkeep`, `_attic/.gitkeep`
   (irrelevant once dirs have content; do not propagate)
 * `.template-source` (project setting, not template content)
+* `.gitattributes` and `.editorconfig` (project policy files, created only
+  when the user opts in to the LF-only policy)
 
 ## Flow
 

@@ -77,6 +77,8 @@ These files are owned by the template, not by the project:
 * All files under `.cursor/rules/`
 * All files under `.cursor/skills/bootstrap-workspace/`
 * All files under `.cursor/skills/update-from-template/`
+* `_template/line-endings.md`
+* `_template/apply-lf-policy.py`
 
 Changes flow template -> projects only, applied via the
 `update-from-template` skill (which reads the source location from
@@ -91,6 +93,10 @@ of these files, change it in the template (the source named in
 `.template-source`), then run the `update-from-template` skill in this
 project to pull the change in. This keeps every project consistent and
 makes the template the single point of evolution.
+
+`.gitattributes` and `.editorconfig` are deliberately not template-
+controlled. They are project policy files created only when a derived
+project opts in to the optional LF-only line-ending policy.
 
 ---
 
