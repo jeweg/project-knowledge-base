@@ -1,7 +1,13 @@
 # AI Project Template
 
-A template for AI-assisted projects: a curated knowledge layer that
-survives across chats. Copy this folder to start a new project workspace.
+Most projects with AI tooling ship an `AGENTS.md` file -- rules for
+agents to follow. This template adds something rarer: a self-organizing
+knowledge layer for the project itself (curated state, optional tiered
+worldview, working files, keyword index), kept in the project's own
+Git repo alongside the code. What was learned, decided, and tried
+survives across chats, machines, and future contributors.
+
+Copy this folder into a project to start.
 
 Developed and used in Cursor; designed to also work with Claude Code, 
 Codex CLI, and any other agent tool that reads `AGENTS.md` or `CLAUDE.md` at
@@ -9,9 +15,9 @@ the workspace root (most modern ones do).
 
 > [!TIP]
 > TLDR: copy this folder, open an AI chat, and tell the agent what you want
-> to work on. That's it. The first agent will likely offer to bootstrap `STATE.md`
-> and ask what it needs to know; let it. The structure described below grows from
-> there naturally.
+> to work on. That's it. The first agent will likely offer to bootstrap
+> `_agents/STATE.md` and ask what it needs to know; let it. The structure
+> described below grows from there naturally.
 > You can stop reading at this point and still use the template competently -- 
 > the rest of this README is for when you want to understand the design.
 
@@ -32,35 +38,56 @@ the workspace root (most modern ones do).
 
 ## The Problem This Solves
 
-When working with AI on longer efforts -- code analysis, debugging, design
-exploration, research -- understanding accumulates in chat sessions and scattered
-markdown files. Chats may hit context limits and get abandoned. Files become redundant
-or contradictory as understanding evolves. You lose the overview, feel the urge to
-start from scratch, but are afraid of losing buried insights.
+When working with AI on longer efforts -- code analysis, debugging,
+design exploration, research -- understanding accumulates in chat
+sessions and scattered markdown files. There are two ways it gets
+lost.
 
-This template provides a structure that separates raw exploration from curated
-understanding, so you can work messily without losing clarity.
+Across chats: sessions hit context limits and get abandoned. Files
+become redundant or contradictory as understanding evolves. You feel
+the urge to start from scratch but are afraid of losing buried
+insights.
+
+Across the project / code split: when code lives in a versioned repo
+(GitLab, GitHub) but the meta -- motivating ideas, requirements,
+alternatives explored, the reasoning behind decisions -- lives in a
+personal OneDrive folder or scattered notes, that meta gets stranded
+the moment the code becomes the authoritative checkout. A new
+contributor cloning the repo gets the code with no story. An agent
+starting fresh in a clone gets no context. Reasoning is reconstructed
+from scratch -- or, more often, abandoned.
+
+This template addresses both. It separates raw exploration from
+curated understanding (so you can work messily without losing
+clarity), and stores both alongside the code in the same Git repo
+(so what was learned travels with the project rather than living in
+a separate workspace that gets forgotten or stranded). The repo
+root stays artifact-forward; the meta sits one level in, under
+`_agents/`.
 
 
 ## Core Concepts
 
 There are two kinds of material in this workspace:
 
-* Working files (`_working/`) -- the messy, temporal record of exploration.
-  Chat dumps, notes, half-formed ideas, dead ends, session summaries, handoffs
-  for future agents. These are expected to be redundant, contradictory, and
-  incomplete. They are raw material. Their primary function is preserving
-  knowledge across short-lived agent sessions; err on the side of dumping --
-  lost knowledge costs more than a messy file. See "Knowledge persistence
-  across sessions" under Design Principles for the rationale.
+* Working files (`_agents/working/`) -- the messy, temporal record of
+  exploration. Chat dumps, notes, half-formed ideas, dead ends, session
+  summaries, handoffs for future agents. These are expected to be
+  redundant, contradictory, and incomplete. They are raw material.
+  Their primary function is preserving knowledge across short-lived
+  agent sessions; err on the side of dumping -- lost knowledge costs
+  more than a messy file. See "Knowledge persistence across sessions"
+  under Design Principles for the rationale.
 
-* The state document (`STATE.md`) -- your single, clean, current-state summary.
-  This is what you would hand someone to get them up to speed. It is rewritten
-  as understanding matures, not appended to. Stale information is overwritten,
-  not preserved alongside new information. It always starts with a "Hot List"
-  (max 5 bullets, each terse -- a headline plus pointers, not a status
-  paragraph) of the most important facts and priorities right now, and each
-  section heading carries a freshness marker like `(updated 2026-04-01)`.
+* The state document (`_agents/STATE.md`) -- your single, clean,
+  current-state summary. This is what you would hand someone to get
+  them up to speed. It is rewritten as understanding matures, not
+  appended to. Stale information is overwritten, not preserved
+  alongside new information. It always starts with a "Hot List" (max
+  5 bullets, each terse -- a headline plus pointers, not a status
+  paragraph) of the most important facts and priorities right now,
+  and each section heading carries a freshness marker like
+  `(updated 2026-04-01)`.
 
 The key discipline: working files flow into STATE.md when an aspect crystallizes,
 and then they get archived. STATE.md is never a log -- it is always a snapshot of
@@ -68,9 +95,16 @@ and then they get archived. STATE.md is never a log -- it is always a snapshot o
 after a break.
 
 For larger or longer-lived projects, the curated layer can extend with two
-optional documents -- `IDENTITY.md` (what the project IS) and `VISION.md` (where
-it is HEADING). They are introduced manually when a project earns them, not by
-default. See "Beyond STATE.md" below.
+optional documents -- `_agents/IDENTITY.md` (what the project IS) and
+`_agents/VISION.md` (where it is HEADING). They are introduced manually
+when a project earns them, not by default. See "Beyond STATE.md" below.
+
+Both layers live under `_agents/` at the repo root. The root itself
+stays artifact-forward (README, build manifest, src/, tests/, etc.)
+so consumers see a normal project, while contributors and agents who
+want the project's accumulated understanding find it one directory
+in. The whole thing -- code AND meta -- lives in one Git repo, so a
+clone has the full context.
 
 
 ## Setting Up a New Workspace
@@ -79,11 +113,12 @@ default. See "Beyond STATE.md" below.
 2. Open it in your editor (Cursor, VS Code, or similar).
 3. If this workspace analyzes an external codebase, note the paths and mention
    them when you tell the AI about the project in step 4 -- they will go into
-   STATE.md.
-4. Start a chat. The AI will notice that STATE.md does not exist and offer to
-   create one based on what you tell it about the project. The initial STATE.md
-   will include a Hot List, a Purpose section, Open Questions, and Action Items
-   as a minimum skeleton.
+   `_agents/STATE.md`.
+4. Start a chat. The AI will notice that `_agents/STATE.md` does not
+   exist and offer to create one based on what you tell it about the
+   project. The initial `_agents/STATE.md` will include a Hot List, a
+   Purpose section, Open Questions, and Action Items as a minimum
+   skeleton.
 5. Delete this file (`README.md`). It is only needed during setup. (GitHub
    conventions made `README.md` the right name for the template repo's
    landing page; once you have copied the template into a project, the
@@ -92,34 +127,93 @@ default. See "Beyond STATE.md" below.
 
 ## Optional: LF-only Line Endings
 
-`_template/` contains optional template-maintenance helpers and metadata.
-It is not project content. You can delete it from a derived project if
-you do not want template-update or LF-policy helpers; the core workspace
-still works with `AGENTS.md`, `STATE.md`, and the working-file
-conventions. Keeping `_template/` just makes future template syncs and
-optional setup tasks easier.
-
 The template is neutral by default and does not force a line-ending
-policy. If you want a derived repository to be LF-only, run:
+policy on every project created from it. Some projects need CRLF for
+specific files, some teams have established editor settings, and
+public template users should not get a surprise mechanical rewrite.
+
+If you want an LF-only repository, opt in after creating the derived
+project:
 
 ```bash
-python _template/apply-lf-policy.py
+python _agents/apply-lf-policy.py
 ```
 
-The script adds `.gitattributes` and `.editorconfig`, warns about Git
-line-ending config such as `core.autocrlf=true`, normalizes tracked text
-files when the workspace is already a Git repo, and leaves the result
-uncommitted for review. See `_template/line-endings.md` for the full
-procedure and caveats.
+This creates two files.
+
+`.gitattributes`:
+
+```gitattributes
+* text=auto eol=lf
+
+*.gif binary
+*.gz binary
+*.ico binary
+*.jpeg binary
+*.jpg binary
+*.pdf binary
+*.png binary
+*.webp binary
+```
+
+`.editorconfig`:
+
+```ini
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+```
+
+`.gitattributes` is the repository guard -- Git uses it to check text
+files out with LF endings on every platform. The binary patterns keep
+common binary formats out of text normalization. `.editorconfig` is
+the editor hint -- supporting editors create and save text files as
+UTF-8 with LF endings. It does not rewrite existing files by itself,
+but an editor may apply it when saving a file.
+
+The script also reports relevant Git settings and warns about risky
+values:
+
+* `core.autocrlf=true` can create CRLF working-tree files in
+  repositories without a `.gitattributes` guard.
+* `core.eol=crlf` conflicts with an LF-only repo policy.
+* `core.autocrlf=input`, `core.autocrlf=false`, or unset are usually
+  fine when `.gitattributes` pins the repository policy.
+
+The script only reports Git config; it never changes local or global
+Git configuration.
+
+For an existing repository, run the cleanup as a dedicated mechanical
+change:
+
+```bash
+python _agents/apply-lf-policy.py --dry-run
+python _agents/apply-lf-policy.py
+git status --short
+git diff --stat
+# run the project's tests/build
+git commit -m "chore: normalize text files to LF"
+```
+
+Review risky files before committing, especially tracked data stores,
+fixtures, generated files, vendored code, `.bat` / `.cmd`, archives,
+databases, and unknown binary formats.
+
+If the project does not want this helper at all, delete
+`_agents/apply-lf-policy.py`. The core workspace contract still works
+without it.
 
 
 ## Day-to-Day Workflow
 
-Work in chats as usual. The agent updates STATE.md directly with clean
-operational findings and drops a dated `_working/` file (e.g.
-`2026-03-09-memory-layout-notes.md`) for preliminary or session-handoff
-material. Most of this happens without direction; the prompts below are for
-when you want to drive something specific.
+Work in chats as usual. The agent updates `_agents/STATE.md` directly
+with clean operational findings and drops a dated `_agents/working/`
+file (e.g. `2026-03-09-memory-layout-notes.md`) for preliminary or
+session-handoff material. Most of this happens without direction; the
+prompts below are for when you want to drive something specific.
 
 * "consolidate these working files into STATE.md" (name them, or say
   "everything about topic X") -- the agent rewrites affected sections and
@@ -128,28 +222,28 @@ when you want to drive something specific.
   for contradictions, stale freshness dates, dead references, and whether
   the Hot List still matches reality. It reports without silently rewriting.
 * "wrap up the session" or "write a handoff" -- the agent dumps findings and
-  open questions to a `_working/` file before context runs out. Agents are
-  supposed to do this proactively when context is filling; ask if a session
-  ends without one and you noticed.
+  open questions to a `_agents/working/` file before context runs out.
+  Agents are supposed to do this proactively when context is filling;
+  ask if a session ends without one and you noticed.
 
 When the urge hits to reorganize from scratch, resist copying everything into
-a new folder. Instead, rewrite the stale STATE.md sections, archive the
-working files that fed them, and leave in-progress aspects untouched. Same
-psychological reset, no information loss.
+a new folder. Instead, rewrite the stale `_agents/STATE.md` sections,
+archive the working files that fed them, and leave in-progress aspects
+untouched. Same psychological reset, no information loss.
 
 
 ## Beyond STATE.md: Identity and Vision
 
-Most projects are well-served by `STATE.md` alone. As a project grows and its
-worldview stabilises, two more curated documents become useful at the workspace
-root:
+Most projects are well-served by `_agents/STATE.md` alone. As a project
+grows and its worldview stabilises, two more curated documents become
+useful under `_agents/`:
 
-* `IDENTITY.md` -- what the project IS. Purpose, architectural commitments,
-  posture, the "no, you cannot do that" rules that guard against shortcuts.
-  Slow-changing.
-* `VISION.md` -- where the project is HEADING. Long-term capabilities, reframes,
-  moon shots, ambitions that orient design without driving immediate work.
-  Updated occasionally.
+* `_agents/IDENTITY.md` -- what the project IS. Purpose, architectural
+  commitments, posture, the "no, you cannot do that" rules that guard
+  against shortcuts. Slow-changing.
+* `_agents/VISION.md` -- where the project is HEADING. Long-term
+  capabilities, reframes, moon shots, ambitions that orient design
+  without driving immediate work. Updated occasionally.
 
 The three together form the knowledge layer, each with a distinct role and
 update cadence: STATE every session, IDENTITY when the worldview shifts (rare),
@@ -161,8 +255,8 @@ The agent watches for the cues that justify introducing these (architectural
 content bleeding into the STATE.md hot list, vision-shaped material accumulating
 across working files) and proposes the lift when warranted. You can also
 trigger it directly: "lift the architectural sections of STATE.md into a new
-IDENTITY.md" or "we have enough vision-shaped material in `_working/`; create
-VISION.md from it."
+IDENTITY.md" or "we have enough vision-shaped material in `_agents/working/`;
+create VISION.md from it."
 
 
 ## What Goes Where
@@ -170,24 +264,29 @@ VISION.md from it."
 The agent handles routing automatically; this list is just for orientation if
 you want to know where things end up.
 
-* Findings, answered questions, decisions --> STATE.md (rewrite sections, update
-  freshness markers, re-examine the Hot List). This is the default destination.
-* Architectural commitments, posture, "do not do this" rules (when IDENTITY.md
-  exists) --> IDENTITY.md
-* Long-term ambitions, reframes, moon shots (when VISION.md exists) --> VISION.md
-* In-workspace project layout (run / build / test commands for `impl/`,
-  `android/`, etc.) --> a `## Layout` section in STATE.md, or section in
-  IDENTITY.md if it exists
-* Preliminary exploration, raw notes, chat dumps, session summaries, handoffs
-  for future agents --> `_working/`
-* Keyword index of working files --> `_working/INDEX.md` (agents maintain this
-  automatically when they create or update working files; it lets future agents
-  find relevant material without reading everything)
-* Consumed working files --> `_archive/` (the user moves them; the agent
-  surfaces which are absorbed and updates the INDEX). Or just delete.
-* Rules the AI should always follow --> `.cursor/rules/`
-* External codebase paths (when the workspace analyzes code that lives
-  elsewhere) --> STATE.md (or IDENTITY.md when it exists)
+* Findings, answered questions, decisions --> `_agents/STATE.md`
+  (rewrite sections, update freshness markers, re-examine the Hot
+  List). This is the default destination.
+* Architectural commitments, posture, "do not do this" rules (when
+  `_agents/IDENTITY.md` exists) --> `_agents/IDENTITY.md`
+* Long-term ambitions, reframes, moon shots (when
+  `_agents/VISION.md` exists) --> `_agents/VISION.md`
+* In-workspace project layout (run / build / test commands for
+  `src/`, `impl/`, `android/`, etc.) --> a `## Layout` section in
+  `_agents/STATE.md`, or section in `_agents/IDENTITY.md` if it
+  exists
+* Preliminary exploration, raw notes, chat dumps, session summaries,
+  handoffs for future agents --> `_agents/working/`
+* Keyword index of working files --> `_agents/working/INDEX.md`
+  (agents maintain this automatically when they create or update
+  working files; it lets future agents find relevant material
+  without reading everything)
+* Consumed working files --> `_agents/archive/` (the user moves them;
+  the agent surfaces which are absorbed and updates the INDEX). Or
+  just delete.
+* External codebase paths (when the workspace analyzes code that
+  lives elsewhere) --> `_agents/STATE.md` (or `_agents/IDENTITY.md`
+  when it exists)
 
 
 ## Relationship to Karpathy's "LLM Wiki" Pattern
@@ -209,22 +308,27 @@ and maintain a living knowledge artifact instead.
 
 ### Where we differ
 
-* Karpathy uses a multi-page wiki with cross-linked entity, concept, and synthesis
-  pages. We default to a single STATE.md, with optional IDENTITY.md and VISION.md
-  as a fixed-size extension when a project's worldview and ambitions outgrow what
-  STATE alone can hold. This avoids inter-page consistency problems and ontology
-  drift at the cost of a natural ceiling on volume. Beyond three curated documents,
-  the right move is to split into separate workspaces.
-* Karpathy defines ingest as a first-class automated operation (new source arrives,
-  LLM updates 10-15 pages). Our system is conversation-driven -- the human controls
-  the pace. This trades systematic coverage for tighter editorial control, which
-  matters when "sources" are live code analysis rather than static documents.
-* We add a working-file layer (_working/) as a sanctioned messy staging area.
-  Karpathy's design has no equivalent -- material goes straight into the wiki.
+* Karpathy uses a multi-page wiki with cross-linked entity, concept,
+  and synthesis pages. We default to a single STATE.md, with optional
+  IDENTITY.md and VISION.md as a fixed-size extension when a
+  project's worldview and ambitions outgrow what STATE alone can
+  hold. This avoids inter-page consistency problems and ontology
+  drift at the cost of a natural ceiling on volume. Beyond three
+  curated documents, the right move is to split into separate
+  workspaces.
+* Karpathy defines ingest as a first-class automated operation (new
+  source arrives, LLM updates 10-15 pages). Our system is
+  conversation-driven -- the human controls the pace. This trades
+  systematic coverage for tighter editorial control, which matters
+  when "sources" are live code analysis rather than static documents.
+* We add a working-file layer (`_agents/working/`) as a sanctioned
+  messy staging area. Karpathy's design has no equivalent -- material
+  goes straight into the wiki.
 * We add a Hot List for rapid re-orientation. Karpathy has no equivalent.
-* We add an explicit audit workflow (check contradictions, staleness, dead
-  references). Karpathy's "lint" concept is similar but broader -- it also covers
-  orphan pages and missing cross-links, which are multi-page wiki concerns.
+* We add an explicit audit workflow (check contradictions, staleness,
+  dead references). Karpathy's "lint" concept is similar but broader
+  -- it also covers orphan pages and missing cross-links, which are
+  multi-page wiki concerns.
 
 ### What we deliberately left out
 
@@ -252,14 +356,15 @@ and maintain a living knowledge artifact instead.
 
 The natural evolution path if a single STATE.md becomes unwieldy:
 
-* First, introduce IDENTITY.md and VISION.md as described in "Beyond STATE.md"
-  above. This handles a deepening single project -- architectural identity and
-  long-term ambitions get their own homes, and STATE.md returns to operational
-  state only.
-* If the workspace genuinely contains multiple projects, split into per-project
-  STATE-<name>.md files (or per-project subdirectories with their own
-  three-document knowledge layer). Add a top-level STATE.md that summarizes all
-  projects (a few lines each). The agent reads the top-level state first, then
+* First, introduce IDENTITY.md and VISION.md as described in "Beyond
+  STATE.md" above. This handles a deepening single project --
+  architectural identity and long-term ambitions get their own homes,
+  and STATE.md returns to operational state only.
+* If the workspace genuinely contains multiple projects, split into
+  per-project STATE-<name>.md files (or per-project subdirectories
+  under `_agents/` with their own three-document knowledge layer).
+  Add a top-level `_agents/STATE.md` that summarizes all projects (a
+  few lines each). The agent reads the top-level state first, then
   loads the relevant project.
 
 This gives bounded context per session without the multi-page consistency problem.
@@ -271,6 +376,31 @@ curated knowledge layer becomes necessary regardless of organizational pattern.
 
 These explain why the template is shaped the way it is. Useful context for anyone
 modifying or extending it.
+
+### Artifact-forward root, meta in `_agents/`
+
+The repository root is intended to look like a normal project: a
+README, a build manifest if applicable (`pyproject.toml`, etc.),
+`src/`, `tests/`, and so on. All meta -- the curated knowledge
+layer, working files, optional helpers -- lives under `_agents/`.
+
+This is the shape the template optimizes for, and the reason the
+template exists in this form. The dominant failure mode of
+long-running AI-assisted projects is stranded meta: code gets
+versioned somewhere (GitLab, GitHub), meta gets parked in a personal
+OneDrive folder or scattered notes alongside a non-versioned clone,
+and the two diverge the moment the code becomes the authoritative
+checkout. A clone gives the next contributor only the artifact, not
+the reasoning. An agent starting in that clone has no project
+history to draw on. Whatever the previous contributor (or previous
+agent session) understood, tried, rejected, or pinned down --
+gone, or at best searchable on the wrong machine.
+
+Putting meta inside `_agents/` keeps it in the same repo as the code,
+so it travels with every clone, every machine, every new contributor,
+every fresh agent session, without dominating the root view that
+consumers and casual readers see. Nothing is stranded outside the
+repo. Nothing has to be reconstructed from chat history.
 
 ### Structure over procedure
 
@@ -306,16 +436,17 @@ Agent chats are typically ephemeral. They hit context limits, get abandoned,
 and -- depending on the tool -- may not even live with the project files (some
 tools store chat history on the host machine, so a project accessed from
 multiple machines effectively starts each session from a blank slate). The
-working-files layer (`_working/`) is the mechanism for getting knowledge out of
-a chat and into the project before that happens, so understanding is never
-trapped inside a single session.
+working-files layer (`_agents/working/`) is the mechanism for getting
+knowledge out of a chat and into the project before that happens, so
+understanding is never trapped inside a single session.
 
-This shifts the operational default. When an agent is unsure whether a finding
-belongs in the curated layer, the right move is to drop a working file -- the
-cost of a messy file that gets archived later is much smaller than the cost of
-knowledge lost when the chat ends. The keyword index (`_working/INDEX.md`) is
-what makes this work without future agents getting buried; every working file
-lives behind a few keywords that future agents grep before reading anything.
+This shifts the operational default. When an agent is unsure whether
+a finding belongs in the curated layer, the right move is to drop a
+working file -- the cost of a messy file that gets archived later is
+much smaller than the cost of knowledge lost when the chat ends. The
+keyword index (`_agents/working/INDEX.md`) is what makes this work
+without future agents getting buried; every working file lives behind
+a few keywords that future agents grep before reading anything.
 
 Working files do not need to pass any durability test. Session summaries, debug
 notes, ideas that may not pan out, and handoffs for future agents are all valid
@@ -332,47 +463,34 @@ evaporate when the chat ends.
 
 ### Tool compatibility
 
-`AGENTS.md` is the convergent standard for agent instructions and is what
-this template treats as canonical. Tools that read it natively work with no
-extra setup; tools that don't get a small pointer file that forces the
-redirect.
+`AGENTS.md` is the convergent standard for agent instructions and is
+what this template treats as canonical. Tools that read it natively
+work with no extra setup; tools that need a redirect get a small
+import file at the root.
 
-* Cursor: reads `AGENTS.md` natively, auto-loads `.cursor/rules/` into
-  every chat, and discovers `.cursor/skills/` on demand. No extra setup.
+* Cursor (3.2.1+): reads `AGENTS.md` natively from the project root.
+  No extra setup. Older Cursor versions may need a `.cursor/rules/`
+  rule pointing at `AGENTS.md`; the template does not ship one.
 * Codex CLI (OpenAI): reads `AGENTS.md` natively, walking from the
-  project root upward, plus a global `~/.codex/AGENTS.md` if present. No
-  extra setup.
-* Claude Code (Anthropic): does not read `AGENTS.md` natively as of 2026;
-  reads `CLAUDE.md` by convention. The template ships a small `CLAUDE.md`
-  that exists solely to force Claude to read `AGENTS.md` first. When
-  Anthropic adds native `AGENTS.md` support (open feature request),
-  `CLAUDE.md` becomes removable.
-* Other tools: add the equivalent of "always read `AGENTS.md` first" in
-  whatever mechanism the tool provides.
-
-### When to add skills vs. keep instructions in AGENTS.md
-
-Instructions belong in AGENTS.md when they apply to most sessions and are short
-enough that their context cost is negligible. Move something to a skill file when
-it runs rarely (like bootstrapping -- once per project) and is long enough to
-matter. A skill only saves context when the procedure behind it is substantially
-larger than its description. Most knowledge-management workflows are judgment-based
-and compress to a few lines, so they belong in AGENTS.md.
-
-A specific case: STATE.md has a bootstrap skill (`bootstrap-workspace`) but
-IDENTITY.md and VISION.md deliberately do not. STATE is universal and has rigid
-structure -- a portable skeleton is meaningful. IDENTITY and VISION are introduced
-selectively, with project-specific structure, so a skeleton would prescribe wrong
-shapes. A skill would also create an invocation surface that nudges agents toward
-creating these files prematurely, defeating the earned-over-time model. Their
-introduction is conversational instead, with the rule documented in AGENTS.md.
+  project root upward, plus a global `~/.codex/AGENTS.md` if present.
+  No extra setup.
+* Claude Code (Anthropic): reads `CLAUDE.md` natively. The template
+  ships a `CLAUDE.md` containing one line, `@AGENTS.md`, which Claude
+  Code interprets as "import the contents of AGENTS.md as part of my
+  rules." This means CLAUDE.md and AGENTS.md stay synchronized
+  automatically -- you only edit AGENTS.md.
+* Other tools: add the equivalent of "always read `AGENTS.md` first"
+  in whatever mechanism the tool provides.
 
 
 ## Tips
 
-* The `_archive/` and `_attic/`folders are optional. If you are comfortable deleting 
-  consumed working files, skip it. It exists for people who are not ready to let go yet.
-* For meetings and interviews, consider keeping the full transcript in `_archive/` 
-  and a shorter summary in `_working/`. The summary is what agents will find via the
-  index and use day-to-day. The full transcript stays available in case you need
-  to look up a specific quote, exact wording, or a detail the summary missed.
+* The `_agents/archive/` and `_agents/attic/` folders are optional.
+  If you are comfortable deleting consumed working files, skip them.
+  They exist for people who are not ready to let go yet.
+* For meetings and interviews, consider keeping the full transcript
+  in `_agents/archive/` and a shorter summary in `_agents/working/`.
+  The summary is what agents will find via the index and use
+  day-to-day. The full transcript stays available in case you need
+  to look up a specific quote, exact wording, or a detail the
+  summary missed.

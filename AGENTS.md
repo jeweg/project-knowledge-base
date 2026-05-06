@@ -5,107 +5,70 @@
 This workspace is organized for knowledge management around an evolving
 project.
 
-Knowledge layer files (workspace root):
+Project memory lives under `_agents/` at the workspace root. Everything
+inside `_agents/` is meta: the project's own state, working notes, and
+optional helpers. The repository's product code, research notes, or
+analysis sits alongside it under whatever shape the project calls for.
 
-* `STATE.md` (always present) -- Current operational state. What is in
-  flight, what is unresolved, what comes next. Sections are rewritten
-  as understanding matures, never merely appended to. Touched every
-  session that produces operational findings.
-* `IDENTITY.md` (optional; introduced for larger / longer-lived
+Curated knowledge layer (under `_agents/`):
+
+* `_agents/STATE.md` (always present) -- Current operational state.
+  What is in flight, what is unresolved, what comes next. Sections are
+  rewritten as understanding matures, never merely appended to.
+  Touched every session that produces operational findings.
+* `_agents/IDENTITY.md` (optional; introduced for larger / longer-lived
   projects) -- What the project IS. Purpose, architectural
   commitments, posture, non-negotiables. Slow-changing.
-* `VISION.md` (optional; introduced for larger / longer-lived
+* `_agents/VISION.md` (optional; introduced for larger / longer-lived
   projects) -- Where the project is HEADING. Long-term capabilities,
   reframes, moon shots, what the substrate or design enables that has
   not yet been built. Updated occasionally.
 
-Working material:
+Working material (under `_agents/`):
 
-* `_working/` -- Messy exploration files, chat dumps, in-progress
+* `_agents/working/` -- Messy exploration files, chat dumps, in-progress
   notes, session summaries, handoffs for future agents. Raw material,
   not reference. May be redundant, contradictory, or stale. Primary
   function: preserve knowledge across short-lived agent sessions, so
   it never lives only inside one chat. Err on the side of dumping --
   lost knowledge is more expensive than a messy file.
-* `_working/INDEX.md` -- Keyword index of all working files. This is
-  how you find relevant working files without reading all of them.
-  See "Working file hygiene".
-* `_archive/` -- Working files whose insights have been fully absorbed
-  into the knowledge layer, plus raw source material (e.g. full
-  meeting transcripts) that backs the summaries in `_working/`. You
-  may read files from `_archive/` if you need original source detail
-  that a summary does not cover. Files are moved here by the user
-  after an agent surfaces a list of fully-absorbed working files (see
-  "When asked to consolidate"); agents do not move files into
-  `_archive/` themselves.
-* `_attic/` -- Discontinued work that may have future comparative
-  value (a paused design, a deprecated approach kept for reference).
-  Agents do NOT read `_attic/` proactively, do not include it in
-  searches, and do not surface its contents -- only access it when
-  the user explicitly asks ("look in `_attic/` for the old X"). The
-  distinction from `_archive/`: archive is consumed history; attic is
-  parked work that may resume or be compared against later.
+* `_agents/working/INDEX.md` -- Keyword index of all working files.
+  This is how you find relevant working files without reading all of
+  them. See "Working file hygiene".
+* `_agents/archive/` -- Working files whose insights have been fully
+  absorbed into the knowledge layer, plus raw source material (e.g.
+  full meeting transcripts) that backs the summaries in
+  `_agents/working/`. You may read files from `_agents/archive/` if
+  you need original source detail that a summary does not cover.
+  Files are moved here by the user after an agent surfaces a list of
+  fully-absorbed working files (see "When asked to consolidate");
+  agents do not move files into `_agents/archive/` themselves.
+* `_agents/attic/` -- Discontinued work that may have future
+  comparative value (a paused design, a deprecated approach kept for
+  reference). Agents do NOT read `_agents/attic/` proactively, do not
+  include it in searches, and do not surface its contents -- only
+  access it when the user explicitly asks ("look in `_agents/attic/`
+  for the old X"). The distinction from `_agents/archive/`: archive
+  is consumed history; attic is parked work that may resume or be
+  compared against later.
 
 Project context:
 
-* `.cursor/rules/` -- Persistent AI context that loads into every
-  chat.
 * `README.md` -- If the workspace was started from the AI workspace
   template, the initial `README.md` is the template's setup
   documentation, not project content. Ignore it during normal
   operation. If it still exists and the project already has a
-  `STATE.md`, suggest to the user that it can be deleted (its banner
-  near the top says the same). Once it is deleted, a future
+  `_agents/STATE.md`, suggest to the user that it can be deleted (its
+  banner near the top says the same). Once it is deleted, a future
   `README.md` is project content like any other file.
 
-Implementation directories (project-specific) sit alongside the
-knowledge layer at the root. Project layout, build / run / test
-commands, and key conventions live in `STATE.md` or `IDENTITY.md`
-(when the latter exists). If you find a project with substantial
-implementation but no orientation pointers in either file, add a
-brief `## Layout` section to `STATE.md` -- a few lines naming each
-directory and its run command is plenty.
-
----
-
-## Template-Controlled Files
-
-These files are owned by the template, not by the project:
-
-* `AGENTS.md` (this file)
-* `CLAUDE.md`
-* All files under `.cursor/rules/`
-* All files under `.cursor/skills/bootstrap-workspace/`
-* All files under `.cursor/skills/update-from-template/`
-* `_template/.gitignore`
-* `_template/line-endings.md`
-* `_template/apply-lf-policy.py`
-
-Changes flow template -> projects only, applied via the
-`update-from-template` skill (which reads the source location from
-`_template/template-source` at the project root). Do not edit these files
-locally inside a project. Project-side edits are treated as violations
-on the next sync, and the migrating agent will propose lifting the
-content to its proper home (`STATE.md`, `IDENTITY.md`, etc.) before
-overwriting the tracked file.
-
-If you discover during project work that something should change in any
-of these files, change it in the template (the source named in
-`_template/template-source`), then run the `update-from-template` skill in this
-project to pull the change in. This keeps every project consistent and
-makes the template the single point of evolution.
-
-`_template/template-source` itself is project-local configuration, not
-template-controlled content. Edit it when a project intentionally tracks
-a fork or local template checkout.
-
-`_template/` is optional helper material. A project may delete it if it
-does not want template-update or LF-policy helpers; the core workspace
-contract still lives in `AGENTS.md`, the curated layer, and `_working/`.
-
-`.gitattributes` and `.editorconfig` are deliberately not template-
-controlled. They are project policy files created only when a derived
-project opts in to the optional LF-only line-ending policy.
+Implementation directories (project-specific) sit at the workspace
+root alongside `_agents/`. Project layout, build / run / test
+commands, and key conventions live in `_agents/STATE.md` or
+`_agents/IDENTITY.md` (when the latter exists). If you find a project
+with substantial implementation but no orientation pointers in either
+file, add a brief `## Layout` section to `_agents/STATE.md` -- a few
+lines naming each directory and its run command is plenty.
 
 ---
 
@@ -113,47 +76,47 @@ project opts in to the optional LF-only line-ending policy.
 
 ### What goes where
 
-* `STATE.md` is for what is HAPPENING now. Hot list, in-flight work,
-  open questions, action items, freshly-pinned decisions whose
+* `_agents/STATE.md` is for what is HAPPENING now. Hot list, in-flight
+  work, open questions, action items, freshly-pinned decisions whose
   rationale is still being absorbed. Operational. Updated every
   session.
-* `IDENTITY.md` is for what the project IS. The mental model and
-  worldview. Architectural commitments. Conventions. Constraints
-  that cannot be renegotiated cheaply. The "no, you cannot do
-  that" rules that guard against shortcuts. Updated when the
-  worldview shifts (rare); treated as a deliberate act, not a
-  side-effect of feature work.
-* `VISION.md` is for where the project is HEADING. Long-term
-  capabilities, reframes, moon shots, ambitions worth preserving
-  so they do not get lost in day-to-day work. Updated when
-  reflection or brainstorming produces durable new ambitions.
-  Occasional.
+* `_agents/IDENTITY.md` is for what the project IS. The mental model
+  and worldview. Architectural commitments. Conventions. Constraints
+  that cannot be renegotiated cheaply. The "no, you cannot do that"
+  rules that guard against shortcuts. Updated when the worldview
+  shifts (rare); treated as a deliberate act, not a side-effect of
+  feature work.
+* `_agents/VISION.md` is for where the project is HEADING. Long-term
+  capabilities, reframes, moon shots, ambitions worth preserving so
+  they do not get lost in day-to-day work. Updated when reflection
+  or brainstorming produces durable new ambitions. Occasional.
 
 When a finding is clean enough for the curated layer, decide which
 tier. Will it still be valid in three months? If yes (binding rule,
-stable architecture decision, posture commitment) -> `IDENTITY.md`.
-If it is something you want to be true at some future point ->
-`VISION.md`. Otherwise -> `STATE.md`. (This is a routing test among
-curated tiers, not a gate on whether to capture at all -- findings
-that are not yet curated-layer-ready go to `_working/` regardless of
-how durable they are.)
+stable architecture decision, posture commitment) ->
+`_agents/IDENTITY.md`. If it is something you want to be true at some
+future point -> `_agents/VISION.md`. Otherwise -> `_agents/STATE.md`.
+(This is a routing test among curated tiers, not a gate on whether
+to capture at all -- findings that are not yet curated-layer-ready
+go to `_agents/working/` regardless of how durable they are.)
 
 ### When to introduce them
 
-* `IDENTITY.md`: when a Purpose section or Design Summary section in
-  `STATE.md` has been substantially stable for weeks and you find
-  yourself re-explaining its content rather than evolving it. Lift
-  those sections out of `STATE.md` into `IDENTITY.md` and replace
-  with a short cross-reference.
-* `VISION.md`: when a brainstorm session or reflection produces
-  long-term ambitions that you want to preserve as orientation
-  without driving immediate work. The brainstorm itself can stay in
-  `_working/` while the durable distillation moves to `VISION.md`.
+* `_agents/IDENTITY.md`: when a Purpose section or Design Summary
+  section in `_agents/STATE.md` has been substantially stable for
+  weeks and you find yourself re-explaining its content rather than
+  evolving it. Lift those sections out of `_agents/STATE.md` into
+  `_agents/IDENTITY.md` and replace with a short cross-reference.
+* `_agents/VISION.md`: when a brainstorm session or reflection
+  produces long-term ambitions that you want to preserve as
+  orientation without driving immediate work. The brainstorm itself
+  can stay in `_agents/working/` while the durable distillation
+  moves to `_agents/VISION.md`.
 
-If a project has `IDENTITY.md` but no `VISION.md`, that is fine. If a
-project has `VISION.md` but no `IDENTITY.md`, that is a smell --
-vision without grounded identity tends to drift. Add `IDENTITY.md`
-first.
+If a project has `_agents/IDENTITY.md` but no `_agents/VISION.md`,
+that is fine. If a project has `_agents/VISION.md` but no
+`_agents/IDENTITY.md`, that is a smell -- vision without grounded
+identity tends to drift. Add `_agents/IDENTITY.md` first.
 
 ### Cross-references
 
@@ -161,24 +124,27 @@ Each knowledge layer file should open with a short preamble pointing
 at the others (whichever exist), so a reader landing on any one of
 them can find the rest. The shape:
 
-* `STATE.md` opens by pointing at `IDENTITY.md` (for what the
-  project is) and `VISION.md` (for where it is heading) and any
-  canonical design doc in `_working/`.
-* `IDENTITY.md` opens by pointing at `VISION.md` and `STATE.md`.
-* `VISION.md` opens by pointing at `IDENTITY.md` and `STATE.md`.
+* `_agents/STATE.md` opens by pointing at `_agents/IDENTITY.md` (for
+  what the project is) and `_agents/VISION.md` (for where it is
+  heading) and any canonical design doc in `_agents/working/`.
+* `_agents/IDENTITY.md` opens by pointing at `_agents/VISION.md` and
+  `_agents/STATE.md`.
+* `_agents/VISION.md` opens by pointing at `_agents/IDENTITY.md` and
+  `_agents/STATE.md`.
 
 ### Reading order for context priming
 
 When starting a session:
 
-1. Read `STATE.md`. The hot list is the most informative thing in
-   the workspace.
-2. Read `IDENTITY.md` when the task touches architectural decisions,
-   when contemplating a shortcut, when reorienting after a long
-   break, or when uncertain whether a proposed change matches the
-   project's worldview.
-3. Read `VISION.md` when doing big-picture work, prioritisation,
-   reflection, or when asked to think about direction.
+1. Read `_agents/STATE.md`. The hot list is the most informative thing
+   in the workspace.
+2. Read `_agents/IDENTITY.md` when the task touches architectural
+   decisions, when contemplating a shortcut, when reorienting after a
+   long break, or when uncertain whether a proposed change matches
+   the project's worldview.
+3. Read `_agents/VISION.md` when doing big-picture work,
+   prioritisation, reflection, or when asked to think about
+   direction.
 
 Do not read all three on every trivial task. Read the cheapest
 sufficient subset.
@@ -190,21 +156,22 @@ sufficient subset.
 Your primary job in this workspace is to keep knowledge from getting
 lost across short-lived agent sessions. Two operational forms:
 
-* Maintain the curated layer (`STATE.md`, plus `IDENTITY.md` and
-  `VISION.md` when they exist) as a reliable, current set of
-  references.
-* Capture session-bound knowledge into `_working/` -- summaries,
-  handoffs, partial findings -- so understanding persists when the
-  chat ends.
+* Maintain the curated layer (`_agents/STATE.md`, plus
+  `_agents/IDENTITY.md` and `_agents/VISION.md` when they exist) as a
+  reliable, current set of references.
+* Capture session-bound knowledge into `_agents/working/` --
+  summaries, handoffs, partial findings -- so understanding persists
+  when the chat ends.
 
 The curated layer is the project's reference state; working files
 are the persistence mechanism that prevents knowledge loss between
 agents. Treat both as continuous responsibilities, not periodic
 cleanup tasks.
 
-`IDENTITY.md` and `VISION.md` exist only when the project has earned
-them; do not create them eagerly. When they exist, route findings to
-whichever file's role they fit (see "What goes where" above).
+`_agents/IDENTITY.md` and `_agents/VISION.md` exist only when the
+project has earned them; do not create them eagerly. When they exist,
+route findings to whichever file's role they fit (see "What goes
+where" above).
 
 ### Markdown files
 
@@ -234,33 +201,33 @@ knowledge layer files, and handoff working files.
 
 ### When producing findings or insights
 
-* When a finding is clean and operational, update `STATE.md`
+* When a finding is clean and operational, update `_agents/STATE.md`
   directly. If the topic already has a section, rewrite that section.
   If it is a new aspect, add a section.
 * If the finding is binding worldview / posture / architectural
-  commitment (and `IDENTITY.md` exists), route there instead. If
-  `IDENTITY.md` does not exist but the finding clearly belongs there,
-  add it to `STATE.md` and flag that this is a candidate for an
-  eventual `IDENTITY.md` lift.
+  commitment (and `_agents/IDENTITY.md` exists), route there instead.
+  If `_agents/IDENTITY.md` does not exist but the finding clearly
+  belongs there, add it to `_agents/STATE.md` and flag that this is a
+  candidate for an eventual `_agents/IDENTITY.md` lift.
 * If the finding is long-term ambition / reframe / moon shot (and
-  `VISION.md` exists), route there. Otherwise, drop a working doc in
-  `_working/`; vision-shaped material benefits from staging in
-  working files until it stabilises.
+  `_agents/VISION.md` exists), route there. Otherwise, drop a working
+  doc in `_agents/working/`; vision-shaped material benefits from
+  staging in working files until it stabilises.
 * A finding may have multiple aspects (operational + architectural,
   or near-term + long-term). Split it across tiers and cross-
   reference rather than forcing the whole thing into one home.
-* Use a `_working/` file when the finding is preliminary (still
-  exploring, conclusion might change), when it is a session summary
-  or handoff for future agents, when it captures context another
-  agent should not have to rediscover, or when you need a staging
-  area before synthesis.
+* Use a `_agents/working/` file when the finding is preliminary
+  (still exploring, conclusion might change), when it is a session
+  summary or handoff for future agents, when it captures context
+  another agent should not have to rediscover, or when you need a
+  staging area before synthesis.
 * When in doubt, drop a working file. Working files exist primarily
   to preserve knowledge across short-lived agent sessions -- lost
   knowledge is more expensive than a messy file.
-* Whenever you create a file (in `_working/` or anywhere else), name
-  the file in your reply and summarise its contents in a sentence or
-  two so the user knows it exists. Never silently create files
-  outside `_working/` without confirming.
+* Whenever you create a file (in `_agents/working/` or anywhere
+  else), name the file in your reply and summarise its contents in a
+  sentence or two so the user knows it exists. Never silently create
+  files outside `_agents/working/` without confirming.
 
 ### When updating knowledge layer files
 
@@ -271,20 +238,21 @@ knowledge layer files, and handoff working files.
 * If a new aspect has emerged that deserves its own section, add it
   and suggest where it fits in the document's structure.
 * Freshness markers. Two conventions, depending on the file:
-  - `STATE.md` uses per-section markers
+  - `_agents/STATE.md` uses per-section markers
     (`## Technical Status (updated YYYY-MM-DD)`) because its sections
     are rewritten independently. Update the marker on sections you
     actually rewrite; leave others as-is.
-  - `IDENTITY.md` and `VISION.md` use a single top-level marker on
-    the document title (`# Title (updated YYYY-MM-DD)`) because the
-    worldview and ambitions tend to evolve as a whole. Bump the
-    top-level marker on any substantive edit.
+  - `_agents/IDENTITY.md` and `_agents/VISION.md` use a single
+    top-level marker on the document title
+    (`# Title (updated YYYY-MM-DD)`) because the worldview and
+    ambitions tend to evolve as a whole. Bump the top-level marker
+    on any substantive edit.
   - Working files do not need freshness markers; their dated
     filename is the freshness signal.
 
-`STATE.md`-specific rule:
+`_agents/STATE.md`-specific rule:
 
-* Hot list. `STATE.md` starts with a `## Hot List` section
+* Hot list. `_agents/STATE.md` starts with a `## Hot List` section
   immediately after any preamble. This is a short (typically ~5
   bullets) summary of the most important facts and priorities right
   now. The number is a heuristic for spotting trouble, not a hard
@@ -293,24 +261,24 @@ knowledge layer files, and handoff working files.
   full status paragraphs. If a bullet keeps growing, content has
   crept in from another section; lift the detail to its proper home
   and leave a pointer. Every time you update any section of
-  `STATE.md`, also re-examine the hot list and rewrite it if the
-  update changes what matters most. The hot list must always be
+  `_agents/STATE.md`, also re-examine the hot list and rewrite it if
+  the update changes what matters most. The hot list must always be
   current -- it is the first thing a reader (human or AI) sees. If
   the hot list keeps drifting well past ~5 bullets, the cause is
   usually that architectural identity is bleeding into operational
-  state; that is a signal to introduce `IDENTITY.md` and lift the
-  architectural content out.
+  state; that is a signal to introduce `_agents/IDENTITY.md` and
+  lift the architectural content out.
 
 ### Session-end handoff
 
 When a session is wrapping up -- the user signals they are done, the
 context window is filling, or the work has produced findings without
 landing in the curated layer -- drop a working file summarising what
-was learned, what is still open, and where the next agent should pick
-up. Frame it as a handoff. Add an `INDEX.md` entry like any other
-working file. This is the operational form of the "preserve knowledge
-across sessions" responsibility from the preamble; do it without
-being asked when the conditions hit.
+was learned, what is still open, and where the next agent should
+pick up. Frame it as a handoff. Add an `INDEX.md` entry like any
+other working file. This is the operational form of the "preserve
+knowledge across sessions" responsibility from the preamble; do it
+without being asked when the conditions hit.
 
 ### When asked to consolidate
 
@@ -323,48 +291,49 @@ any phrasing -- do the following:
 2. Identify which insights from the working files are not yet
    captured in the knowledge layer.
 3. Route each insight to its correct tier:
-   - Operational, in-flight, soon-to-change -> `STATE.md`.
-   - Stable architectural commitment, posture, worldview -> `IDENTITY.md`
-     (or stage in `STATE.md` if `IDENTITY.md` does not exist yet, and
-     suggest the lift).
-   - Long-term ambition, reframe, moon shot -> `VISION.md` (or stage
-     in `_working/` if `VISION.md` does not exist yet, and suggest
-     the lift).
+   - Operational, in-flight, soon-to-change -> `_agents/STATE.md`.
+   - Stable architectural commitment, posture, worldview ->
+     `_agents/IDENTITY.md` (or stage in `_agents/STATE.md` if
+     `_agents/IDENTITY.md` does not exist yet, and suggest the lift).
+   - Long-term ambition, reframe, moon shot -> `_agents/VISION.md`
+     (or stage in `_agents/working/` if `_agents/VISION.md` does not
+     exist yet, and suggest the lift).
 4. Rewrite the affected sections incorporating those insights.
-5. Re-examine the `STATE.md` hot list and rewrite it if the
+5. Re-examine the `_agents/STATE.md` hot list and rewrite it if the
    consolidated insights change what matters most.
 6. List which working files are now fully absorbed and can be moved
-   to `_archive/`. The user typically performs the move.
-7. After files are moved (in the same session or a later one), remove
-   their entries from `_working/INDEX.md`. The index lists only files
-   currently in `_working/`.
+   to `_agents/archive/`. The user typically performs the move.
+7. After files are moved (in the same session or a later one),
+   remove their entries from `_agents/working/INDEX.md`. The index
+   lists only files currently in `_agents/working/`.
 8. Flag any files that are only partially absorbed (some aspects
    still in progress, or only some sections promoted to a higher
-   tier). Partially absorbed files stay in `_working/` until fully
-   absorbed.
+   tier). Partially absorbed files stay in `_agents/working/` until
+   fully absorbed.
 
 ### Working file hygiene
 
 Reading working files:
 
-* To find relevant working files, read `_working/INDEX.md`. It
-  contains keywords for every working file. Use it to decide which
-  files to open -- do not read all working files to "build context".
+* To find relevant working files, read `_agents/working/INDEX.md`.
+  It contains keywords for every working file. Use it to decide
+  which files to open -- do not read all working files to "build
+  context".
 * Do not treat working files as authoritative. If they conflict with
-  the knowledge layer, the knowledge layer wins unless the user says
-  otherwise.
+  the knowledge layer, the knowledge layer wins unless the user
+  says otherwise.
 
 Creating and updating working files:
 
 * Use descriptive names with date prefix:
   `YYYY-MM-DD-short-description.md`.
 * Every time you create or substantially update a working file, you
-  must also update its entry in `_working/INDEX.md`. This is not
-  optional -- the index is how future agents find relevant material.
-  A file without an index entry is invisible.
-* When a working file is moved to `_archive/`, remove its entry from
-  `INDEX.md`. The index should only list files that are currently in
-  `_working/`.
+  must also update its entry in `_agents/working/INDEX.md`. This is
+  not optional -- the index is how future agents find relevant
+  material. A file without an index entry is invisible.
+* When a working file is moved to `_agents/archive/`, remove its
+  entry from `INDEX.md`. The index should only list files that are
+  currently in `_agents/working/`.
 * The entry format is:
 
 ```
@@ -407,20 +376,24 @@ standard git commit guidance:
   findings, mention it. If you are working in an area covered by a
   section whose freshness date is old, say so even if the user did
   not ask.
-* If your own analysis or evidence from code contradicts something in
-  the knowledge layer, say so explicitly and quote the specific
+* If your own analysis or evidence from code contradicts something
+  in the knowledge layer, say so explicitly and quote the specific
   passage that conflicts, so the user can compare without hunting.
-  The knowledge layer is authoritative over working files, but it is
-  not infallible -- flag the contradiction and let the user decide.
+  The knowledge layer is authoritative over working files, but it
+  is not infallible -- flag the contradiction and let the user
+  decide.
 * When creating a working file that covers ground already in the
-  knowledge layer, say which sections overlap and whether the working
-  file adds anything beyond what is already captured. This prevents
-  working files from silently accumulating redundant material.
-* If `STATE.md`'s hot list keeps drifting well past ~5 bullets
-  because architectural content keeps showing up there, suggest
-  introducing `IDENTITY.md` and lifting that content out.
+  knowledge layer, say which sections overlap and whether the
+  working file adds anything beyond what is already captured. This
+  prevents working files from silently accumulating redundant
+  material.
+* If `_agents/STATE.md`'s hot list keeps drifting well past ~5
+  bullets because architectural content keeps showing up there,
+  suggest introducing `_agents/IDENTITY.md` and lifting that
+  content out.
 * If brainstorm-shaped content keeps accumulating across working
-  files without an obvious home, suggest introducing `VISION.md`.
+  files without an obvious home, suggest introducing
+  `_agents/VISION.md`.
 
 ### Auditing knowledge layer files
 
@@ -431,30 +404,76 @@ phrasing, including indirect prompts like "is this still right?",
 following:
 
 * Read the specified file(s) in full and check each section for
-  internal consistency -- do any sections make claims that contradict
-  other sections?
+  internal consistency -- do any sections make claims that
+  contradict other sections?
 * Check freshness dates. Flag any section that has not been updated
   in a long time, especially if the underlying topic is fast-moving.
 * If codebase references are present, spot-check whether key file
   paths, class names, or symbols mentioned still exist in the code.
-* For `STATE.md`: check whether the hot list still reflects the most
-  important priorities, or whether it has drifted from what the
-  sections actually say.
-* For `IDENTITY.md`: check whether any section has accumulated
-  operational content that should be in `STATE.md`, and whether any
-  commitments have been silently violated by recent work.
-* For `VISION.md`: check whether any of the long-term ambitions have
-  drifted into the active roadmap (promote to `STATE.md` action
-  items if so), and whether the cross-references to `IDENTITY.md`
-  commitments still hold.
+* For `_agents/STATE.md`: check whether the hot list still reflects
+  the most important priorities, or whether it has drifted from
+  what the sections actually say.
+* For `_agents/IDENTITY.md`: check whether any section has
+  accumulated operational content that should be in
+  `_agents/STATE.md`, and whether any commitments have been
+  silently violated by recent work.
+* For `_agents/VISION.md`: check whether any of the long-term
+  ambitions have drifted into the active roadmap (promote to
+  `_agents/STATE.md` action items if so), and whether the
+  cross-references to `_agents/IDENTITY.md` commitments still hold.
 * Report what you find. Do not silently rewrite -- present the
   issues and let the user decide what to update.
 
 ### Bootstrapping
 
-If `STATE.md` does not exist, read and follow
-`.cursor/skills/bootstrap-workspace/SKILL.md`.
+If `_agents/STATE.md` does not exist, follow this procedure to
+bootstrap the workspace before doing other operational work:
 
-Do not add bootstrap skills for `IDENTITY.md` or `VISION.md`. They
-are introduced manually as the project earns them; see "When to
-introduce them" above.
+1. Ask the user what the project or investigation is about.
+2. If `_agents/working/` already contains files, offer to read them
+   and incorporate their content into the initial
+   `_agents/STATE.md`.
+3. If `_agents/working/INDEX.md` does not exist but
+   `_agents/working/` contains files, create the index by reading
+   each file and generating its keyword entry.
+4. Create `_agents/STATE.md` using the skeleton below. Fill in real
+   content based on what the user told you -- do not leave
+   placeholders. Add more sections as needed, but never remove
+   these:
+
+```
+# <Project Name> -- Project State
+
+## Hot List
+
+* <up to 5 bullets: the most important facts and priorities right now>
+
+## Purpose (updated YYYY-MM-DD)
+
+<What this project is and why it exists. 1-3 paragraphs.>
+
+## Open Questions (updated YYYY-MM-DD)
+
+* <Things not yet understood or decided>
+
+## Action Items (updated YYYY-MM-DD)
+
+* <What to do next>
+```
+
+5. If a top-level `README.md` exists and its content is the AI
+   workspace template's setup documentation (sections like
+   "The Problem This Solves", "Core Concepts", "Setting Up a New
+   Workspace"), suggest to the user that it can be deleted now that
+   the workspace is set up. Do not delete a `README.md` whose
+   content is project documentation.
+6. If the user wants an LF-only repository, point them at the
+   "Optional: LF-only Line Endings" section in the template's
+   `README.md` and offer to run `python _agents/apply-lf-policy.py`.
+   Do not apply the policy silently; `.gitattributes` and
+   `.editorconfig` are project policy files, not public-template
+   defaults.
+
+Do not add bootstrap procedures for `_agents/IDENTITY.md` or
+`_agents/VISION.md`. They are introduced manually as the project
+earns them; see "When to introduce them" above.
