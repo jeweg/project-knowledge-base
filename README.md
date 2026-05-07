@@ -14,7 +14,8 @@ Codex CLI, and any other agent tool that reads `AGENTS.md` or `CLAUDE.md` at
 the workspace root (most modern ones do).
 
 > [!TIP]
-> TLDR: copy this folder, open an AI chat, and tell the agent what you want
+> TLDR: copy this folder, feel free to delete README.md, open an AI chat, 
+> and tell the agent what you want
 > to work on. That's it. The first agent will likely offer to bootstrap
 > `_agents/STATE.md` and ask what it needs to know; let it. The structure
 > described below grows from there naturally.
@@ -24,16 +25,28 @@ the workspace root (most modern ones do).
 
 ## Contents
 
-* [The Problem This Solves](#the-problem-this-solves)
-* [Core Concepts](#core-concepts)
-* [Setting Up a New Workspace](#setting-up-a-new-workspace)
-* [Optional: LF-only Line Endings](#optional-lf-only-line-endings)
-* [Day-to-Day Workflow](#day-to-day-workflow)
-* [Beyond STATE.md: Identity and Vision](#beyond-statemd-identity-and-vision)
-* [What Goes Where](#what-goes-where)
-* [Relationship to Karpathy's "LLM Wiki" Pattern](#relationship-to-karpathys-llm-wiki-pattern)
-* [Design Principles](#design-principles)
-* [Tips](#tips)
+- [AI Project Template](#ai-project-template)
+  - [Contents](#contents)
+  - [The Problem This Solves](#the-problem-this-solves)
+  - [Core Concepts](#core-concepts)
+  - [Setting Up a New Workspace](#setting-up-a-new-workspace)
+  - [Optional: LF-only Line Endings](#optional-lf-only-line-endings)
+  - [Day-to-Day Workflow](#day-to-day-workflow)
+  - [Beyond STATE.md: Identity and Vision](#beyond-statemd-identity-and-vision)
+  - [What Goes Where](#what-goes-where)
+  - [Relationship to Karpathy's "LLM Wiki" Pattern](#relationship-to-karpathys-llm-wiki-pattern)
+    - [What we share](#what-we-share)
+    - [Where we differ](#where-we-differ)
+    - [What we deliberately left out](#what-we-deliberately-left-out)
+    - [If you outgrow this template](#if-you-outgrow-this-template)
+  - [Design Principles](#design-principles)
+    - [Artifact-forward root, meta in `_agents/`](#artifact-forward-root-meta-in-_agents)
+    - [Structure over procedure](#structure-over-procedure)
+    - [Bounded curated layer](#bounded-curated-layer)
+    - [Knowledge persistence across sessions](#knowledge-persistence-across-sessions)
+    - [The AI is a maintainer, not a retriever](#the-ai-is-a-maintainer-not-a-retriever)
+    - [Tool compatibility](#tool-compatibility)
+  - [Tips](#tips)
 
 
 ## The Problem This Solves
