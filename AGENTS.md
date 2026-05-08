@@ -1,4 +1,4 @@
- Agents Rules
+# Agents Rules
 
 ## Workspace Structure
 
@@ -174,11 +174,12 @@ where" above).
 
 ### Markdown files
 
+These rules keep files diff-friendly, greppable, and consistently rendered in plain-text contexts.
+
 When writing Markdown files, default to these rules:
 
 * Use one or more leading `#` for sections, not the alternative style
   with separate underlining.
-* Use `---` horizontal lines where they make sense.
 * Prefer `*` for unordered lists over `-`. Nested lists inside
   ordered or checkbox lists may use `-` to keep the hierarchy
   visible.
