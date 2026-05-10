@@ -54,13 +54,15 @@ Materials layer (under `_knowledge/`):
 
 Project context:
 
-* `README.md` -- If the workspace was started from the Project
-  Knowledge Base template, the initial `README.md` is template setup
-  documentation, not project content. Ignore it during normal
-  operation. If it still exists alongside `_knowledge/STATE.md`,
-  suggest deleting it (its top banner says the same). After
-  deletion, a future `README.md` is project content like any other
-  file.
+* Template setup material (`README.md` and `_template-docs/`) -- If
+  the workspace was started from the Project Knowledge Base template,
+  the initial `README.md` and the `_template-docs/` folder (which
+  holds the template's demo assets) are template setup documentation,
+  not project content. Ignore both during normal operation. If they
+  still exist alongside `_knowledge/STATE.md`, suggest deleting them
+  together (the README's top banner says the same). After deletion,
+  a future `README.md` is project content like any other file, and
+  `_template-docs/` should not reappear.
 
 Implementation directories (project-specific) sit at the workspace
 root alongside `_knowledge/`. Project layout, build / run / test
@@ -498,8 +500,11 @@ bootstrap the workspace before doing other operational work:
    Project Knowledge Base template's setup documentation (sections
    like "The Problem This Solves", "Core Concepts", "Setting Up a
    New Workspace"), suggest to the user that it can be deleted now
-   that the workspace is set up. Do not delete a `README.md` whose
-   content is project documentation.
+   that the workspace is set up. If a `_template-docs/` folder
+   exists alongside it, include that in the same suggestion -- both
+   are template-only material. Do not delete a `README.md` whose
+   content is project documentation, and do not touch `_template-docs/`
+   on your own initiative.
 
 Do not add bootstrap procedures for `_knowledge/IDENTITY.md` or
 `_knowledge/VISION.md`. They are introduced manually as the project

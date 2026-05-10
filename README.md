@@ -7,6 +7,17 @@ worldview, materials, keyword index), kept in the project's own
 Git repo alongside the code. What was learned, decided, and tried
 survives across chats, machines, and future contributors.
 
+![Demo: an off-hand statement becomes a materials note in the project's knowledge layer.](_template-docs/images/demo-capture.png)
+
+*An off-hand statement becomes a materials note. Future chats find it
+without anyone having to remember it was said.*
+
+![Demo: a reasonable-sounding design proposal meets the project's accumulated context, and the agent flags conflicts from materials and identity before any code is written.](_template-docs/images/demo-pushback.png)
+
+*A reasonable-sounding proposal meets the project's accumulated
+context. The agent flags conflicts from materials and identity
+before any code is written.*
+
 Copy this folder into a project to start.
 
 Developed and used in Cursor; designed to also work with Claude Code, 
@@ -14,11 +25,11 @@ Codex CLI, and any other agent tool that reads `AGENTS.md` or `CLAUDE.md` at
 the workspace root (most modern ones do).
 
 > [!TIP]
-> TLDR: copy this folder, feel free to delete README.md, open an AI chat, 
-> and tell the agent what you want
-> to work on. That's it. The first agent will likely offer to bootstrap
-> `_knowledge/STATE.md` and ask what it needs to know; let it. The structure
-> described below grows from there naturally.
+> TLDR: copy this folder, feel free to delete `README.md` and the
+> `_template-docs/` folder, open an AI chat, and tell the agent what
+> you want to work on. That's it. The first agent will likely offer to
+> bootstrap `_knowledge/STATE.md` and ask what it needs to know; let it.
+> The structure described below grows from there naturally.
 > You can stop reading at this point and still use the template competently -- 
 > the rest of this README is for when you want to understand the design.
 
@@ -131,10 +142,11 @@ clone has the full context.
    project. The initial `_knowledge/STATE.md` will include a Hot List, a
    Purpose section, Open Questions, and Action Items as a minimum
    skeleton.
-5. Delete this file (`README.md`). It is only needed during setup. (GitHub
-   conventions made `README.md` the right name for the template repo's
-   landing page; once you have copied the template into a project, the
-   file's job is done.)
+5. Delete `README.md` and the `_template-docs/` folder. Both are template
+   setup material -- the README is the template repo's landing page
+   (GitHub conventions named it that), and `_template-docs/` holds the
+   demo assets it embeds. Neither is needed once the template has been
+   copied into a project.
 
 
 ## Day-to-Day Workflow
