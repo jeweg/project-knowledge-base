@@ -1,4 +1,4 @@
-# Project Knowledge Base
+# Project Memory
 
 Most projects with AI tooling ship an `AGENTS.md` -- always-on rules
 for agents. This template adds something rarer: an AI-maintained
