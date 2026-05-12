@@ -85,15 +85,6 @@ Materials layer (under `_knowledge/`):
   Files are moved here by the user after an agent surfaces a list of
   fully-absorbed materials (see "When asked to consolidate");
   agents do not move files into `_knowledge/archive/` themselves.
-* `_knowledge/attic/` -- Discontinued work that may have future
-  comparative value (a paused design, a deprecated approach kept for
-  reference). Agents do NOT read `_knowledge/attic/` proactively, do not
-  include it in searches, and do not surface its contents -- only
-  access it when the user explicitly asks ("look in `_knowledge/attic/`
-  for the old X"). The distinction from `_knowledge/archive/`: archive
-  is consumed history; attic is parked work that may resume or be
-  compared against later.
-
 Project context:
 
 * Template setup material (`README.md`) -- If the workspace was
@@ -488,8 +479,8 @@ Creating and updating materials (working files):
   not optional -- the index is how future agents find relevant
   material. A file without an index entry is invisible.
 * When a working file leaves `_knowledge/materials/` -- moved to
-  `_knowledge/archive/`, parked in `_knowledge/attic/`, deleted, or
-  renamed -- remove or update its entry in `INDEX.md`. The index
+  `_knowledge/archive/`, deleted, or renamed -- remove or update its
+  entry in `INDEX.md`. The index
   should only list files currently in `_knowledge/materials/`. This
   applies whether you performed the move yourself or noticed
   afterwards that the user or a past agent did; do not wait for an
@@ -607,9 +598,8 @@ standard git commit guidance:
   `_knowledge/materials/`, treat the index as out of date and repair
   it the moment you see it -- not only during an audit. Remove the
   entry if the file has moved to `_knowledge/archive/` (insights
-  absorbed) or `_knowledge/attic/` (parked work, not surfaced
-  proactively). If the file has simply vanished with no trace in
-  archive or attic, ask the user before deleting the entry. Apply
+  absorbed). If the file has simply vanished with no trace in
+  archive, ask the user before deleting the entry. Apply
   the same logic to cross-references in `_knowledge/STATE.md`,
   `_knowledge/IDENTITY.md`, or `_knowledge/VISION.md` that point at
   a moved or missing file.

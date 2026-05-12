@@ -15,10 +15,12 @@ out of the box. No per-tool configuration.
 1. Copy this folder to your project location (or `git clone` it).
 2. Delete `.git/` if you cloned.
 3. Delete this `README.md`.
-4. Open the folder in your AI tool of choice and start a chat. The
-   agent will see the template-default banners in
-   `_knowledge/STATE.md` and `_knowledge/materials/OVERVIEW.md`, ask
-   what your project is about, and replace them with real content.
+4. Open the folder in your AI tool of choice and tell the agent
+   what you want to do -- e.g. "let's start this project, it'll be
+   about ...". The template-default banners in `_knowledge/STATE.md`
+   and `_knowledge/materials/OVERVIEW.md` will steer it toward
+   capturing what the project is about and replacing them with real
+   content.
 
 That is it. No setup script, no configuration.
 
@@ -43,8 +45,8 @@ Optional, introduced when the project earns them:
   commitments, posture.
 * `_knowledge/VISION.md` -- long-term ambitions, reframes, moon
   shots.
-* `_knowledge/archive/` and `_knowledge/attic/` -- consumed and
-  parked materials.
+* `_knowledge/archive/` -- consumed materials whose insights have
+  been absorbed into the curated layer.
 
 `AGENTS.md` at the repo root holds the canonical always-on rules.
 `CLAUDE.md` is a one-line shim that points Claude Code at
@@ -77,7 +79,6 @@ and write a handoff" -- but most of it happens without prompting.
 ## Design rationale
 
 Design decisions, alternatives considered, and the changelog of
-breaking changes live in the separate meta repo:
-[project-knowledge-base-meta](../project-knowledge-base-meta). Read
-it when extending the template, migrating an existing project to a
+breaking changes live in the separate meta repo *project-memory-meta*. 
+Read it when extending the template, migrating an existing project to a
 newer template version, or just curious about the why.
