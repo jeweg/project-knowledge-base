@@ -32,8 +32,7 @@ After the first session, the agent maintains:
   as understanding matures, never just appended. Starts with a Hot
   List of the most important facts and priorities right now.
 * `_knowledge/materials/` -- session summaries, exploration notes,
-  durable knowledge artifacts, handoffs for future agents. Messy by
-  design.
+  context notes, and durable knowledge artifacts. Messy by design.
 * `_knowledge/materials/INDEX.md` -- keyword index of working files.
   Updated whenever materials change.
 * `_knowledge/materials/OVERVIEW.md` -- one-paragraph external-facing
@@ -59,7 +58,8 @@ as a pre-commit sanity check.
 
 You can drive maintenance explicitly when useful -- "consolidate
 these materials into STATE.md", "audit state", "wrap up the session
-and write a handoff" -- but most of it happens without prompting.
+and summarize what changed" -- but most of it happens without
+prompting.
 
 ## What this enables
 

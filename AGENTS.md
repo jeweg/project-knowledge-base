@@ -47,7 +47,7 @@ Materials layer (under `_knowledge/`):
 
   - Working files (lowercase-named, e.g. `topic-description.md`):
     exploration, chat dumps, in-progress notes, session summaries,
-    handoffs for future agents, and -- for knowledge-heavy projects -- durable
+    context notes, and -- for knowledge-heavy projects -- durable
     knowledge artifacts (sources, syntheses, entities) that form
     the project's deliverable content. May be redundant,
     contradictory, or stale. Primary function: preserve knowledge
@@ -195,9 +195,10 @@ type:
   `_knowledge/IDENTITY.md` and `_knowledge/VISION.md` when they exist)
   as a reliable, current set of references for the project itself.
 * Capture working knowledge into `_knowledge/materials/` -- session
-  summaries, handoffs, partial findings, and (for knowledge-heavy
-  projects) durable knowledge artifacts -- so understanding persists
-  when the chat ends and is reachable by future agents.
+  summaries, partial findings, context another agent should not have
+  to rediscover, and (for knowledge-heavy projects) durable knowledge
+  artifacts -- so understanding persists when the chat ends and is
+  reachable by future agents.
 * Keep `_knowledge/materials/OVERVIEW.md` current as the materials
   namespace evolves; it is the project's external-facing
   self-description.
@@ -250,7 +251,7 @@ Report green/red, not counts. "532 tests passed" goes stale and is
 ambiguous (full suite or subset?); "full suite green".
 When a count IS informative, name what it counts
 ("12 new idempotency tests added; suite green"). Applies to commits,
-knowledge layer files, and handoff materials.
+knowledge layer files, and materials files.
 
 ### Local file operations
 
@@ -280,13 +281,12 @@ commands, not to local file work.
   reference rather than forcing the whole thing into one home.
 * Use a `_knowledge/materials/` file when the finding is preliminary
   (still exploring, conclusion might change), when it is a session
-  summary or handoff for future agents, when it captures context
-  another agent should not have to rediscover, when you need a
-  staging area before synthesis, or -- for knowledge-heavy projects
-  -- when capturing durable knowledge artifacts (sources, syntheses,
-  entities) that form the project's deliverable content. The latter
-  stay in `materials/` permanently; they do not migrate up into the
-  curated layer.
+  summary, when it captures context another agent should not have to
+  rediscover, when you need a staging area before synthesis, or --
+  for knowledge-heavy projects -- when capturing durable knowledge
+  artifacts (sources, syntheses, entities) that form the project's
+  deliverable content. The latter stay in `materials/` permanently;
+  they do not migrate up into the curated layer.
 * Capture in the same turn as you produce the finding. Do not
   present analysis and ask "shall I write this up?" -- write the
   file and announce it in the same reply. Objection is cheaper
@@ -396,16 +396,17 @@ per-file.>
   canonical materials>
 ```
 
-### Session-end handoff
+### Session wrap-up
 
 When a session is wrapping up -- the user signals they are done, the
 context window is filling, or the work has produced findings without
-landing in the curated layer -- drop a materials file summarising what
-was learned, what is still open, and where the next agent should
-pick up. Frame it as a handoff. Add an `INDEX.md` entry like any
-other materials file. This is the operational form of the "preserve
-knowledge across sessions" responsibility from the preamble; do it
-without being asked when the conditions hit.
+landing in the curated layer -- preserve useful context before it is
+lost. If the context is enough for the immediate next turn only, an
+informal chat summary is fine. If it should survive beyond the chat,
+write a normal materials file with a descriptive name and add an
+`INDEX.md` entry like any other materials file. Do not create a
+special file category for this; durable context is just materials
+content until it is promoted, archived, or deleted.
 
 ### When asked to consolidate
 
@@ -470,7 +471,7 @@ Creating and updating materials (working files):
 * Optionally prefix a date (`YYYY-MM-DD-topic.md`) when the file is
   anchored to a specific event whose date is genuinely meaningful
   -- a meeting transcript, a dated newsletter capture, a session
-  handoff. For files that are designed to evolve over time, omit
+  summary. For files that are designed to evolve over time, omit
   the date; it would only encode creation, not freshness, and the
   inline `(updated YYYY-MM-DD)` marker on the title handles
   freshness for revised content.
